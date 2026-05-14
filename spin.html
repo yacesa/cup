@@ -1,0 +1,997 @@
+<!-- =========================================
+CEO LEAGUE - FULL SPIN.HTML
+MOBILE ONLY + LOGIN + ALERT + GOOGLE SHEET
+========================================= -->
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="
+width=390,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no
+">
+
+<title>CEO LEAGUE SPIN</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+
+width:100%;
+max-width:390px;
+min-width:390px;
+
+margin:auto;
+
+background:#040816;
+color:white;
+
+overflow-x:hidden;
+
+padding:10px;
+}
+
+/* BG */
+
+body::before{
+content:'';
+position:fixed;
+
+width:180px;
+height:180px;
+
+background:#006eff;
+
+filter:blur(120px);
+
+top:-80px;
+right:-80px;
+
+opacity:.22;
+
+z-index:-1;
+}
+
+body::after{
+content:'';
+position:fixed;
+
+width:180px;
+height:180px;
+
+background:#00ffe1;
+
+filter:blur(120px);
+
+bottom:-80px;
+left:-80px;
+
+opacity:.15;
+
+z-index:-1;
+}
+
+/* LOGO */
+
+.logo{
+
+text-align:center;
+
+font-size:22px;
+font-weight:800;
+
+background:linear-gradient(
+90deg,
+#00ffe1,
+#0072ff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.sub{
+
+text-align:center;
+
+font-size:9px;
+
+margin-top:3px;
+
+color:#8f8f8f;
+}
+
+/* CARD */
+
+.card{
+
+width:100%;
+
+margin-top:14px;
+
+padding:14px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.07);
+
+backdrop-filter:blur(12px);
+}
+
+/* TITLE */
+
+.title{
+
+font-size:11px;
+font-weight:700;
+
+margin-bottom:10px;
+
+color:#00ffe1;
+}
+
+/* TEXTAREA */
+
+textarea{
+
+width:100%;
+height:110px;
+
+border:none;
+outline:none;
+resize:none;
+
+padding:12px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.05);
+
+color:white;
+
+font-size:10px;
+line-height:1.8;
+}
+
+/* BUTTON */
+
+button{
+
+width:100%;
+
+height:46px;
+
+margin-top:12px;
+
+border:none;
+outline:none;
+
+border-radius:14px;
+
+font-size:11px;
+font-weight:700;
+
+color:white;
+
+background:linear-gradient(
+90deg,
+#00ffe1,
+#0072ff
+);
+
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.35;
+cursor:not-allowed;
+}
+
+/* BRACKET */
+
+.bracket{
+
+width:100%;
+
+margin-top:16px;
+
+overflow:hidden;
+
+display:flex;
+justify-content:center;
+}
+
+/* TOURNAMENT */
+
+.tournament{
+
+width:100%;
+
+display:grid;
+
+grid-template-columns:
+82px
+50px
+50px
+50px
+82px;
+
+gap:4px;
+
+justify-content:center;
+align-items:center;
+}
+
+/* ROUND */
+
+.round{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+/* MATCH */
+
+.match{
+
+padding:4px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.07);
+}
+
+/* PLAYER */
+
+.player{
+
+height:22px;
+
+margin:4px 0;
+
+padding:0 5px;
+
+border-radius:7px;
+
+background:rgba(255,255,255,.03);
+
+display:flex;
+align-items:center;
+
+font-size:7px;
+font-weight:600;
+
+overflow:hidden;
+white-space:nowrap;
+}
+
+/* ICON */
+
+.icon{
+
+width:12px;
+height:12px;
+
+margin-right:5px;
+
+border-radius:50%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:6px;
+font-weight:700;
+
+background:linear-gradient(
+90deg,
+#00ffe1,
+#0072ff
+);
+
+flex-shrink:0;
+}
+
+/* CENTER */
+
+.center{
+
+width:44px;
+height:44px;
+
+border-radius:12px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.07);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:14px;
+font-weight:700;
+
+margin:auto;
+}
+
+/* ROUND TITLE */
+
+.r-title{
+
+text-align:center;
+
+font-size:6px;
+font-weight:700;
+
+margin-bottom:3px;
+
+color:#00ffe1;
+}
+
+/* SPACING */
+
+.leftSemi{
+margin-top:32px;
+}
+
+.final{
+margin-top:72px;
+}
+
+.rightSemi{
+margin-top:32px;
+}
+
+/* GRID */
+
+.grid{
+
+width:100%;
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:8px;
+
+margin-top:10px;
+}
+
+/* INPUT */
+
+.inputBox{
+
+width:100%;
+
+height:40px;
+
+border:none;
+outline:none;
+
+padding:0 10px;
+
+border-radius:12px;
+
+background:rgba(255,255,255,.05);
+
+color:white;
+
+font-size:9px;
+font-weight:600;
+}
+
+/* WINNER */
+
+.winner{
+
+margin-top:14px;
+
+padding:16px;
+
+border-radius:18px;
+
+text-align:center;
+
+background:linear-gradient(
+135deg,
+rgba(0,255,225,.12),
+rgba(0,114,255,.12)
+);
+
+border:1px solid rgba(255,255,255,.07);
+}
+
+.winner h2{
+font-size:18px;
+}
+
+/* HIDDEN */
+
+.hidden{
+display:none;
+}
+
+/* ALERT */
+
+.alertPopup{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.7);
+
+display:none;
+justify-content:center;
+align-items:center;
+
+z-index:99999;
+
+padding:20px;
+}
+
+.alertBox{
+
+width:100%;
+
+max-width:300px;
+
+padding:24px 18px;
+
+border-radius:28px;
+
+text-align:center;
+
+background:#09101f;
+
+border:1px solid rgba(255,255,255,.08);
+
+animation:popup .25s ease;
+}
+
+.alertIcon{
+
+width:65px;
+height:65px;
+
+margin:auto;
+
+border-radius:20px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:28px;
+
+background:linear-gradient(
+135deg,
+#00ffe1,
+#006eff
+);
+}
+
+.alertText{
+
+margin-top:18px;
+
+font-size:12px;
+font-weight:700;
+
+line-height:1.8;
+}
+
+.alertBtn{
+
+width:100%;
+
+height:48px;
+
+margin-top:20px;
+
+border:none;
+outline:none;
+
+border-radius:16px;
+
+font-size:11px;
+font-weight:700;
+
+color:white;
+
+background:linear-gradient(
+90deg,
+#00ffe1,
+#006eff
+);
+}
+
+@keyframes popup{
+
+from{
+opacity:0;
+transform:scale(.8);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="logo">
+🏆 CEO LEAGUE
+</div>
+
+<div class="sub">
+MOBILE TOURNAMENT SYSTEM
+</div>
+
+<!-- MAIN -->
+
+<div class="card">
+
+<div class="title">
+🎮 INPUT PLAYER
+</div>
+
+<textarea id="players">
+Ka Yudi
+Ka Abdu
+Ka Fadil
+Yaser
+Dean
+Andika
+Reza
+Om Afdal
+</textarea>
+
+<button onclick="spinCup()" id="spinBtn">
+⚡ SPIN CUP
+</button>
+
+<button onclick="finishSpin()" id="finishBtn">
+✅ SELESAI SPIN
+</button>
+
+<div class="bracket" id="bracket"></div>
+
+</div>
+
+<!-- SEMI -->
+
+<div class="card hidden" id="semiCard">
+
+<div class="title">
+🔥 INPUT SEMI FINAL
+</div>
+
+<div class="grid">
+
+<input class="inputBox" placeholder="Semi 1">
+<input class="inputBox" placeholder="Semi 2">
+
+<input class="inputBox" placeholder="Semi 3">
+<input class="inputBox" placeholder="Semi 4">
+
+</div>
+
+<button onclick="showFinal()" id="semiBtn">
+🏆 SELESAI SEMI
+</button>
+
+</div>
+
+<!-- FINAL -->
+
+<div class="card hidden" id="finalCard">
+
+<div class="title">
+👑 INPUT FINAL
+</div>
+
+<div class="grid">
+
+<input class="inputBox" placeholder="Final 1">
+<input class="inputBox" placeholder="Final 2">
+
+</div>
+
+<button onclick="showWinner()" id="finalBtn">
+🔥 SELESAI FINAL
+</button>
+
+</div>
+
+<!-- WINNER -->
+
+<div class="card hidden" id="winnerCard">
+
+<div class="title">
+🏆 INPUT JUARA
+</div>
+
+<input
+class="inputBox"
+id="winnerInput"
+placeholder="Nama Juara"
+style="margin-top:8px;"
+>
+
+<button onclick="finishWinner()">
+👑 SELESAI JUARA
+</button>
+
+</div>
+
+<!-- OUTPUT -->
+
+<div class="winner hidden" id="winnerBox">
+
+<h2 id="winnerName">
+🏆 CHAMPION
+</h2>
+
+</div>
+
+<!-- ALERT -->
+
+<div class="alertPopup" id="alertPopup">
+
+<div class="alertBox">
+
+<div class="alertIcon">
+🏆
+</div>
+
+<div class="alertText" id="alertText">
+Alert
+</div>
+
+<button
+class="alertBtn"
+onclick="closeAlert()"
+>
+OK
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* API */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbw4fC24zyLqp4O-g5slyi0MrLfzMoo_waAbcR4qiFhbyUIb2L3KaPxf7x5V-SKKB_Sg/exec";
+
+/* ALERT */
+
+function showAlert(message){
+
+document.getElementById("alertText")
+.innerHTML = message;
+
+document.getElementById("alertPopup")
+.style.display = "flex";
+
+}
+
+function closeAlert(){
+
+document.getElementById("alertPopup")
+.style.display = "none";
+
+}
+
+/* SHUFFLE */
+
+function shuffle(array){
+
+for(let i=array.length-1;i>0;i--){
+
+const j=Math.floor(Math.random()*(i+1));
+
+[array[i],array[j]]=[array[j],array[i]];
+
+}
+
+return array;
+
+}
+
+/* PLAYER */
+
+function playerHTML(name){
+
+let first=name.charAt(0).toUpperCase();
+
+return `
+
+<div class="player">
+
+<div class="icon">
+${first}
+</div>
+
+${name}
+
+</div>
+
+`;
+
+}
+
+/* SPIN */
+
+function spinCup(){
+
+let players=document
+.getElementById("players")
+.value
+.split("\n")
+.map(x=>x.trim())
+.filter(x=>x!="");
+
+if(players.length != 8){
+
+showAlert("⚠ Player wajib 8 orang");
+return;
+
+}
+
+players=shuffle(players);
+
+document.getElementById("bracket").innerHTML=`
+
+<div class="tournament">
+
+<div class="round">
+
+<div class="r-title">
+LEFT
+</div>
+
+<div class="match">
+${playerHTML(players[0])}
+${playerHTML(players[1])}
+</div>
+
+<div class="match">
+${playerHTML(players[2])}
+${playerHTML(players[3])}
+</div>
+
+</div>
+
+<div class="round leftSemi">
+
+<div class="r-title">
+SEMI
+</div>
+
+<div class="center">
+🔥
+</div>
+
+</div>
+
+<div class="round final">
+
+<div class="r-title">
+FINAL
+</div>
+
+<div class="center">
+🏆
+</div>
+
+</div>
+
+<div class="round rightSemi">
+
+<div class="r-title">
+SEMI
+</div>
+
+<div class="center">
+🔥
+</div>
+
+</div>
+
+<div class="round">
+
+<div class="r-title">
+RIGHT
+</div>
+
+<div class="match">
+${playerHTML(players[4])}
+${playerHTML(players[5])}
+</div>
+
+<div class="match">
+${playerHTML(players[6])}
+${playerHTML(players[7])}
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+/* FINISH SPIN */
+
+function finishSpin(){
+
+document.getElementById("spinBtn").disabled=true;
+document.getElementById("finishBtn").disabled=true;
+document.getElementById("players").disabled=true;
+
+document.getElementById("semiCard")
+.classList.remove("hidden");
+
+}
+
+/* SHOW FINAL */
+
+function showFinal(){
+
+let semiInputs =
+document.querySelectorAll("#semiCard input");
+
+let empty = false;
+
+semiInputs.forEach(x=>{
+
+if(x.value.trim()==""){
+empty = true;
+}
+
+});
+
+if(empty){
+
+showAlert("⚠ Isi semua nama Semi Final");
+return;
+
+}
+
+semiInputs.forEach(x=>x.disabled=true);
+
+document.getElementById("semiBtn")
+.disabled=true;
+
+document.getElementById("finalCard")
+.classList.remove("hidden");
+
+showAlert("🔥 Semi Final berhasil disimpan");
+
+}
+
+/* SHOW WINNER */
+
+function showWinner(){
+
+let finalInputs =
+document.querySelectorAll("#finalCard input");
+
+let empty = false;
+
+finalInputs.forEach(x=>{
+
+if(x.value.trim()==""){
+empty = true;
+}
+
+});
+
+if(empty){
+
+showAlert("⚠ Isi semua nama Final");
+return;
+
+}
+
+finalInputs.forEach(x=>x.disabled=true);
+
+document.getElementById("finalBtn")
+.disabled=true;
+
+document.getElementById("winnerCard")
+.classList.remove("hidden");
+
+showAlert("🏆 Final berhasil disimpan");
+
+}
+
+/* FINISH WINNER */
+
+async function finishWinner(){
+
+let winner=document
+.getElementById("winnerInput")
+.value;
+
+if(winner==""){
+
+showAlert("⚠ Masukkan nama juara");
+return;
+
+}
+
+document.getElementById("winnerInput")
+.disabled=true;
+
+document.getElementById("winnerBox")
+.classList.remove("hidden");
+
+document.getElementById("winnerName")
+.innerHTML=`👑 ${winner}`;
+
+/* SAVE */
+
+try{
+
+await fetch(API_URL,{
+
+method:"POST",
+
+body:JSON.stringify({
+
+winner:winner
+
+})
+
+});
+
+showAlert("👑 Juara berhasil disimpan");
+
+}catch(err){
+
+showAlert("⚠ Gagal menyimpan data");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
