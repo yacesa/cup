@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>PLAYER RANK</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+background:
+linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.92)),
+url('download (20).jpg');
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+color:white;
+max-width:390px;
+min-width:390px;
+margin:auto;
+padding:18px;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.backBtn{
+width:100%;
+height:48px;
+margin-bottom:16px;
+border:none;
+border-radius:16px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:12px;
+font-weight:800;
+backdrop-filter:blur(14px);
+}
+
+.title{
+padding:18px;
+border-radius:24px;
+background:rgba(10,15,30,.72);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+font-size:22px;
+font-weight:900;
+margin-bottom:18px;
+text-align:center;
+color:#00ffe1;
+}
+
+.card{
+padding:20px;
+border-radius:22px;
+background:rgba(10,15,30,.72);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+text-align:center;
+}
+
+.player{
+position:relative;
+overflow:hidden;
+padding:16px;
+margin-bottom:12px;
+border-radius:22px;
+background:rgba(17,28,47,.82);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 10px 24px rgba(0,0,0,.28);
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+}
+
+.player::before{
+content:'';
+position:absolute;
+top:-40px;
+right:-40px;
+width:100px;
+height:100px;
+background:#00ffe1;
+filter:blur(70px);
+opacity:.12;
+}
+
+.player.gold{
+background:linear-gradient(135deg,rgba(255,193,7,.25),rgba(17,28,47,.88));
+border:1px solid rgba(255,215,0,.55);
+}
+
+.player.silver{
+background:linear-gradient(135deg,rgba(192,192,192,.22),rgba(17,28,47,.88));
+border:1px solid rgba(220,220,220,.45);
+}
+
+.player.bronze{
+background:linear-gradient(135deg,rgba(205,127,50,.25),rgba(17,28,47,.88));
+border:1px solid rgba(205,127,50,.5);
+}
+
+.left{
+display:flex;
+align-items:center;
+gap:12px;
+position:relative;
+z-index:2;
+}
+
+.rankBadge{
+width:46px;
+height:46px;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:900;
+background:rgba(255,255,255,.08);
+}
+
+.gold .rankBadge{
+background:linear-gradient(135deg,#ffd700,#ff9900);
+color:#1d1200;
+box-shadow:0 0 20px rgba(255,215,0,.45);
+}
+
+.silver .rankBadge{
+background:linear-gradient(135deg,#ffffff,#9ca3af);
+color:#111827;
+box-shadow:0 0 20px rgba(220,220,220,.35);
+}
+
+.bronze .rankBadge{
+background:linear-gradient(135deg,#cd7f32,#7c3f16);
+color:white;
+box-shadow:0 0 20px rgba(205,127,50,.35);
+}
+
+.name{
+font-size:15px;
+font-weight:900;
+}
+
+.badge{
+font-size:10px;
+color:#9adfff;
+margin-top:4px;
+font-weight:700;
+}
+
+.pointBox{
+position:relative;
+z-index:2;
+text-align:right;
+}
+
+.point{
+font-size:15px;
+font-weight:900;
+color:#00ffe1;
+}
+
+.pointLabel{
+font-size:9px;
+color:#aaa;
+font-weight:700;
+}
+
+.chartSection{
+margin-top:24px;
+padding:18px;
+border-radius:26px;
+background:#f3f3f3;
+color:#444;
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.chartTitle{
+font-size:20px;
+font-weight:900;
+color:#444;
+line-height:1.2;
+margin-bottom:4px;
+}
+
+.chartSub{
+font-size:11px;
+color:#777;
+margin-bottom:18px;
+}
+
+.chartItem{
+display:grid;
+grid-template-columns:92px 1fr 48px;
+align-items:center;
+gap:8px;
+padding:8px 0;
+}
+
+.chartItem:nth-child(even){
+background:rgba(0,0,0,.04);
+margin-left:-8px;
+margin-right:-8px;
+padding-left:8px;
+padding-right:8px;
+}
+
+.chartName{
+font-size:11px;
+font-weight:800;
+text-align:right;
+line-height:1.1;
+}
+
+.chartBar{
+height:31px;
+border-radius:7px;
+background:rgba(0,0,0,.06);
+overflow:hidden;
+position:relative;
+}
+
+.chartFill{
+height:100%;
+border-radius:7px;
+background:linear-gradient(90deg,#bff1da,#62c78c);
+}
+
+.chartValue{
+font-size:12px;
+font-weight:800;
+color:#444;
+}
+
+.chartWatermark{
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+font-size:90px;
+opacity:.08;
+pointer-events:none;
+}
+
+/* POPUP STATISTIK */
+
+.statsPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.82);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:99999;
+padding:10px;
+}
+
+.statsBox{
+width:100%;
+max-width:370px;
+max-height:94vh;
+overflow-y:auto;
+border-radius:26px;
+background:rgba(10,15,30,.98);
+border:1px solid rgba(0,255,225,.18);
+padding:18px;
+position:relative;
+box-shadow:0 0 35px rgba(0,255,225,.18);
+}
+
+.closeStats{
+position:absolute;
+right:12px;
+top:12px;
+width:34px;
+height:34px;
+border:none;
+border-radius:50%;
+background:rgba(255,255,255,.12);
+color:white;
+font-weight:900;
+cursor:pointer;
+font-size:18px;
+}
+
+#statsName{
+font-size:22px;
+font-weight:900;
+color:#00ffe1;
+text-align:center;
+text-transform:capitalize;
+padding-right:32px;
+}
+
+#statsWeek{
+font-size:11px;
+color:#9adfff;
+text-align:center;
+margin-top:4px;
+margin-bottom:10px;
+font-weight:800;
+}
+
+.chartWrap{
+width:100%;
+height:285px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-top:4px;
+}
+
+#radarChart{
+width:285px !important;
+height:285px !important;
+max-width:285px !important;
+max-height:285px !important;
+}
+
+.statGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:12px;
+}
+
+.statMini{
+padding:13px 10px;
+border-radius:17px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.09);
+text-align:center;
+}
+
+.statMini span{
+display:block;
+font-size:9px;
+font-weight:900;
+color:#dbeafe;
+margin-bottom:5px;
+}
+
+.statMini strong{
+font-size:20px;
+font-weight:900;
+color:#00ffe1;
+}
+
+.winRateBox{
+margin-top:14px;
+padding:17px;
+border-radius:20px;
+background:linear-gradient(90deg,#00ffe1,#006eff);
+color:white;
+text-align:center;
+font-size:11px;
+font-weight:900;
+}
+
+.winRateBox strong{
+display:block;
+font-size:32px;
+margin-top:5px;
+line-height:1;
+}
+
+.winDetail{
+margin-top:8px;
+font-size:11px;
+font-weight:900;
+color:white;
+}
+
+.loadingText{
+text-align:center;
+font-size:12px;
+font-weight:800;
+color:#9adfff;
+margin:15px 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<button class="backBtn" onclick="history.back()">
+⬅ KEMBALI
+</button>
+
+<div class="title" id="weekTitle">
+Loading...
+</div>
+
+<div id="playerData">
+<div class="card">Loading Player...</div>
+</div>
+
+<div class="chartSection" id="chartSection" style="display:none;">
+  <div class="chartTitle">CEO League Player Points</div>
+  <div class="chartSub">Grafik point player berdasarkan week yang dipilih</div>
+  <div style="position:relative;">
+    <div class="chartWatermark">⚽</div>
+    <div id="chartData"></div>
+  </div>
+</div>
+
+<div class="statsPopup" id="statsPopup">
+
+  <div class="statsBox">
+
+    <button class="closeStats" onclick="closeStats()">×</button>
+
+    <h2 id="statsName">PLAYER</h2>
+    <p id="statsWeek"></p>
+
+    <div class="chartWrap">
+      <canvas id="radarChart"></canvas>
+    </div>
+
+    <div id="statDetail" class="statGrid" style="display:none;">
+
+      <div class="statMini">
+        <span>Penguasaan Bola</span>
+        <strong id="dPenguasaan">0%</strong>
+      </div>
+
+      <div class="statMini">
+        <span>Tembakan Target</span>
+        <strong id="dTembakan">0</strong>
+      </div>
+
+      <div class="statMini">
+        <span>Pelanggaran</span>
+        <strong id="dPelanggaran">0</strong>
+      </div>
+
+      <div class="statMini">
+        <span>Intersepsi</span>
+        <strong id="dIntersepsi">0</strong>
+      </div>
+
+      <div class="statMini">
+        <span>Penyelamatan</span>
+        <strong id="dPenyelamatan">0</strong>
+      </div>
+
+      <div class="statMini">
+        <span>Umpan</span>
+        <strong id="dUmpan">0/500</strong>
+      </div>
+
+    </div>
+
+    <div class="winRateBox">
+      <div>WIN RATE</div>
+      <strong id="winRate">0%</strong>
+      <div class="winDetail" id="winDetail">Menang 0 | Kalah 0</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const API_PLAYER =
+"https://script.google.com/macros/s/AKfycbw3ML6t2XC5gDi4nWPfwEwoUEUQ3xXirDO0UWEI6wbVytucMOsx_v1Gzq0bW5kRFsed/exec";
+
+const API_STATISTIK =
+"https://script.google.com/macros/s/AKfycbzkdAGBD4V7E7I3-1VvsjmFYq6X-Yib4QIBtbGCu4S8UXFD5zRysBbzGMxt0ODhklrRwQ/exec";
+
+const urlParams = new URLSearchParams(window.location.search);
+
+let selectedWeek =
+urlParams.get("week") ||
+localStorage.getItem("selectedWeek") ||
+"";
+
+let radarChart = null;
+
+document.getElementById("weekTitle").innerHTML =
+selectedWeek ? "🏆 " + selectedWeek : "🏆 PLAYER RANK";
+
+function rankClass(index){
+  if(index === 0) return "gold";
+  if(index === 1) return "silver";
+  if(index === 2) return "bronze";
+  return "";
+}
+
+function rankIcon(index){
+  if(index === 0) return "🥇";
+  if(index === 1) return "🥈";
+  if(index === 2) return "🥉";
+  return "🎮";
+}
+
+function safeText(value){
+  return String(value || "").replace(/'/g, "\\'");
+}
+
+async function loadPlayer(){
+
+  try{
+
+    if(!selectedWeek){
+
+      document.getElementById("playerData").innerHTML = `
+        <div class="card">
+          <h3>Week Belum Dipilih</h3>
+          <p>Silakan pilih week dari halaman sebelumnya</p>
+        </div>
+      `;
+
+      return;
+    }
+
+    let res = await fetch(
+      API_PLAYER + "?week=" + encodeURIComponent(selectedWeek)
+    );
+
+    let data = await res.json();
+
+    data.sort((a,b)=> Number(b.poin) - Number(a.poin));
+
+    let html = "";
+
+    if(data.length === 0){
+
+      html = `
+        <div class="card">
+          <h3>Tidak Ada Data</h3>
+          <p>Belum ada player untuk ${selectedWeek}</p>
+        </div>
+      `;
+
+      document.getElementById("chartSection").style.display = "none";
+
+    }else{
+
+      data.forEach((item, index)=>{
+
+        html += `
+          <div class="player ${rankClass(index)}" onclick="openStats('${safeText(item.week)}','${safeText(item.player)}')">
+
+            <div class="left">
+
+              <div class="rankBadge">
+                ${rankIcon(index)}
+              </div>
+
+              <div>
+                <div class="name">${item.player}</div>
+                <div class="badge">RANK #${index + 1}</div>
+              </div>
+
+            </div>
+
+            <div class="pointBox">
+              <div class="point">${item.poin}</div>
+              <div class="pointLabel">POINT</div>
+            </div>
+
+          </div>
+        `;
+
+      });
+
+      loadChart(data);
+    }
+
+    document.getElementById("playerData").innerHTML = html;
+
+  }catch(err){
+
+    document.getElementById("playerData").innerHTML = `
+      <div class="card">
+        <h3>Error Load Data</h3>
+        <p>Periksa API Apps Script Player</p>
+      </div>
+    `;
+
+    document.getElementById("chartSection").style.display = "none";
+
+    console.log(err);
+  }
+}
+
+function loadChart(data){
+
+  let maxPoint = Math.max(...data.map(item => Number(item.poin)));
+
+  let chartHTML = "";
+
+  data.forEach((item)=>{
+
+    let percent = maxPoint > 0
+    ? (Number(item.poin) / maxPoint) * 100
+    : 0;
+
+    chartHTML += `
+      <div class="chartItem">
+
+        <div class="chartName">
+          ${item.player}
+        </div>
+
+        <div class="chartBar">
+          <div class="chartFill" style="width:${percent}%"></div>
+        </div>
+
+        <div class="chartValue">
+          ${item.poin}
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  document.getElementById("chartData").innerHTML = chartHTML;
+  document.getElementById("chartSection").style.display = "block";
+}
+
+async function openStats(week, player){
+
+  try{
+
+    document.getElementById("statsPopup").style.display = "flex";
+    document.getElementById("statsName").innerHTML = player;
+    document.getElementById("statsWeek").innerHTML = week;
+    document.getElementById("winRate").innerHTML = "Loading...";
+    document.getElementById("winDetail").innerHTML = "Memuat data...";
+    document.getElementById("statDetail").style.display = "none";
+
+    let res = await fetch(
+      API_STATISTIK +
+      "?week=" + encodeURIComponent(week) +
+      "&player=" + encodeURIComponent(player)
+    );
+
+    let data = await res.json();
+
+    if(!data || data.status === "not_found"){
+      document.getElementById("winRate").innerHTML = "0%";
+      document.getElementById("winDetail").innerHTML = "Statistik belum diinput";
+      alert("Statistik player ini belum diinput");
+      return;
+    }
+
+    let penguasaan = Number(data.penguasaan) || 0;
+    let tembakan = Number(data.tembakan) || 0;
+    let pelanggaran = Number(data.pelanggaran) || 0;
+    let intersepsi = Number(data.intersepsi) || 0;
+    let penyelamatan = Number(data.penyelamatan) || 0;
+    let umpanAsli = Number(data.umpan) || 0;
+
+    /*
+      UMPAN ASLI 1-500
+      RADAR MAKSIMAL 100
+      Jadi umpan harus dinormalisasi agar tidak keluar diagram.
+    */
+    let umpanRadar = Math.min(100, (umpanAsli / 500) * 100);
+
+    let menang = Number(data.menang) || 0;
+    let kalah = Number(data.kalah) || 0;
+
+    let winrate = Number(data.winrate);
+
+    if(isNaN(winrate)){
+      let total = menang + kalah;
+      winrate = total === 0 ? 0 : ((menang / total) * 100).toFixed(1);
+    }
+
+    document.getElementById("winRate").innerHTML = winrate + "%";
+    document.getElementById("winDetail").innerHTML =
+    "Menang " + menang + " | Kalah " + kalah;
+
+    document.getElementById("dPenguasaan").innerHTML = penguasaan + "%";
+    document.getElementById("dTembakan").innerHTML = tembakan;
+    document.getElementById("dPelanggaran").innerHTML = pelanggaran;
+    document.getElementById("dIntersepsi").innerHTML = intersepsi;
+    document.getElementById("dPenyelamatan").innerHTML = penyelamatan;
+    document.getElementById("dUmpan").innerHTML = umpanAsli + "/500";
+
+    document.getElementById("statDetail").style.display = "grid";
+
+    const ctx = document.getElementById("radarChart");
+
+    if(radarChart){
+      radarChart.destroy();
+    }
+
+    radarChart = new Chart(ctx,{
+      type:"radar",
+      data:{
+        labels:[
+          "Penguasaan",
+          "Tembakan",
+          "Pelanggaran",
+          "Intersepsi",
+          "Penyelamatan",
+          "Umpan"
+        ],
+        datasets:[{
+          label:"",
+          data:[
+            penguasaan,
+            tembakan,
+            pelanggaran,
+            intersepsi,
+            penyelamatan,
+            umpanRadar
+          ],
+          fill:true,
+          backgroundColor:"rgba(0,255,225,.18)",
+          borderColor:"#00ffe1",
+          pointBackgroundColor:"#00ffe1",
+          pointBorderColor:"#ffffff",
+          pointRadius:3,
+          borderWidth:2
+        }]
+      },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+
+        plugins:{
+          legend:{
+            display:false
+          },
+          tooltip:{
+            callbacks:{
+              label:function(context){
+                if(context.label === "Umpan"){
+                  return "Umpan: " + umpanAsli + " / 500";
+                }
+
+                if(context.label === "Penguasaan"){
+                  return "Penguasaan: " + penguasaan + "%";
+                }
+
+                return context.label + ": " + context.raw;
+              }
+            }
+          }
+        },
+
+        scales:{
+          r:{
+            min:0,
+            max:100,
+            ticks:{
+              stepSize:20,
+              color:"#9adfff",
+              backdropColor:"transparent",
+              font:{
+                size:10,
+                weight:"bold"
+              }
+            },
+            grid:{
+              color:"rgba(255,255,255,.18)"
+            },
+            angleLines:{
+              color:"rgba(255,255,255,.18)"
+            },
+            pointLabels:{
+              color:"#ffffff",
+              font:{
+                size:10,
+                weight:"bold"
+              }
+            }
+          }
+        }
+      }
+    });
+
+  }catch(err){
+
+    document.getElementById("winRate").innerHTML = "0%";
+    document.getElementById("winDetail").innerHTML = "Gagal memuat statistik";
+    alert("Gagal load statistik");
+    console.log(err);
+
+  }
+}
+
+function closeStats(){
+  document.getElementById("statsPopup").style.display = "none";
+}
+
+loadPlayer();
+
+</script>
+
+</body>
+</html>

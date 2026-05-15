@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>CEO STATISTIK PLAYER</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+width:100%;
+max-width:390px;
+min-width:390px;
+margin:auto;
+min-height:100vh;
+padding:20px;
+color:white;
+background:
+linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.92)),
+url('download (20).jpg');
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+overflow-x:hidden;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,rgba(0,255,225,.16),transparent 38%),
+radial-gradient(circle at bottom,rgba(0,110,255,.18),transparent 42%);
+pointer-events:none;
+z-index:-1;
+}
+
+.header{
+padding:22px 18px;
+border-radius:28px;
+background:rgba(10,15,30,.68);
+border:1px solid rgba(255,255,255,.1);
+backdrop-filter:blur(18px);
+box-shadow:0 12px 32px rgba(0,0,0,.38),0 0 25px rgba(0,255,225,.08);
+text-align:center;
+margin-bottom:18px;
+}
+
+.title{
+font-size:23px;
+font-weight:900;
+background:linear-gradient(90deg,#00ffe1,#007bff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.sub{
+margin-top:8px;
+font-size:10px;
+line-height:1.8;
+color:#cfd8e3;
+}
+
+.formBox{
+padding:20px;
+border-radius:28px;
+background:rgba(10,15,30,.72);
+border:1px solid rgba(255,255,255,.1);
+backdrop-filter:blur(18px);
+box-shadow:0 12px 32px rgba(0,0,0,.38),0 0 25px rgba(0,110,255,.08);
+}
+
+.label{
+font-size:10px;
+font-weight:800;
+color:#9adfff;
+margin-bottom:8px;
+letter-spacing:.5px;
+}
+
+.input{
+width:100%;
+height:52px;
+margin-bottom:15px;
+border:none;
+outline:none;
+padding:0 16px;
+border-radius:18px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+font-size:12px;
+font-weight:700;
+}
+
+.input:focus{
+border:1px solid rgba(0,255,225,.55);
+box-shadow:0 0 16px rgba(0,255,225,.14);
+}
+
+select.input{
+appearance:none;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5'%3E%3C/path%3E%3C/svg%3E");
+background-repeat:no-repeat;
+background-position:right 14px center;
+background-size:14px;
+padding-right:40px;
+}
+
+select.input:focus{
+background-color:#111827;
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.statCard{
+padding:14px;
+margin-bottom:14px;
+border-radius:20px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+}
+
+.statTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.statName{
+font-size:10px;
+font-weight:800;
+color:#ffffff;
+}
+
+.statValue{
+font-size:12px;
+font-weight:900;
+color:#00ffe1;
+}
+
+.range{
+width:100%;
+accent-color:#00ffe1;
+}
+
+.saveBtn{
+width:100%;
+height:56px;
+margin-top:8px;
+border:none;
+outline:none;
+border-radius:20px;
+font-size:12px;
+font-weight:900;
+color:white;
+background:linear-gradient(90deg,#00ffe1,#007bff);
+box-shadow:0 0 24px rgba(0,255,225,.25);
+cursor:pointer;
+}
+
+.backBtn{
+width:100%;
+height:52px;
+margin-top:14px;
+border:none;
+outline:none;
+border-radius:18px;
+font-size:11px;
+font-weight:800;
+color:white;
+background:rgba(255,255,255,.08);
+cursor:pointer;
+}
+
+#success,
+#error{
+margin-top:15px;
+padding:14px;
+border-radius:16px;
+font-size:10px;
+font-weight:800;
+text-align:center;
+display:none;
+}
+
+#success{
+background:rgba(0,255,170,.13);
+border:1px solid rgba(0,255,170,.24);
+color:#adffdf;
+}
+
+#error{
+background:rgba(255,0,60,.13);
+border:1px solid rgba(255,0,60,.24);
+color:#ff9dad;
+}
+
+.note{
+margin-top:12px;
+font-size:9px;
+line-height:1.8;
+color:#9ca3af;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="title">📊 CEO STATISTIK</div>
+  <div class="sub">
+    Input statistik player untuk radar chart, win rate, dan analisis performa.
+  </div>
+</div>
+
+<div class="formBox">
+
+  <div class="label">WEEK</div>
+  <select id="week" class="input">
+    <option value="">Loading Week...</option>
+  </select>
+
+  <div class="label">PLAYER</div>
+  <select id="player" class="input">
+    <option value="">Pilih Player</option>
+    <option value="Ka Fadil">Ka Fadil</option>
+    <option value="Ka Yudi">Ka Yudi</option>
+    <option value="Abdu">Abdu</option>
+    <option value="Om Afdal">Om Afdal</option>
+    <option value="Dean">Dean</option>
+    <option value="Reza">Reza</option>
+    <option value="Andika">Andika</option>
+    <option value="Cep">Cep</option>
+  </select>
+
+  <div class="grid2">
+
+    <div class="statCard">
+      <div class="statTop">
+        <div class="statName">Penguasaan Bola</div>
+        <div class="statValue"><span id="vPenguasaan">50</span>%</div>
+      </div>
+      <input class="range" id="penguasaan" type="range" min="0" max="100" value="50" oninput="syncValue('penguasaan','vPenguasaan')">
+    </div>
+
+    <div class="statCard">
+      <div class="statTop">
+        <div class="statName">Tembakan Target</div>
+        <div class="statValue"><span id="vTembakan">50</span></div>
+      </div>
+      <input class="range" id="tembakan" type="range" min="0" max="100" value="50" oninput="syncValue('tembakan','vTembakan')">
+    </div>
+
+    <div class="statCard">
+      <div class="statTop">
+        <div class="statName">Pelanggaran</div>
+        <div class="statValue"><span id="vPelanggaran">50</span></div>
+      </div>
+      <input class="range" id="pelanggaran" type="range" min="0" max="100" value="50" oninput="syncValue('pelanggaran','vPelanggaran')">
+    </div>
+
+    <div class="statCard">
+      <div class="statTop">
+        <div class="statName">Intersepsi</div>
+        <div class="statValue"><span id="vIntersepsi">50</span></div>
+      </div>
+      <input class="range" id="intersepsi" type="range" min="0" max="100" value="50" oninput="syncValue('intersepsi','vIntersepsi')">
+    </div>
+
+    <div class="statCard">
+      <div class="statTop">
+        <div class="statName">Penyelamatan</div>
+        <div class="statValue"><span id="vPenyelamatan">50</span></div>
+      </div>
+      <input class="range" id="penyelamatan" type="range" min="0" max="100" value="50" oninput="syncValue('penyelamatan','vPenyelamatan')">
+    </div>
+
+    <div class="statCard">
+  <div class="statTop">
+    <div class="statName">Umpan</div>
+    <div class="statValue"><span id="vUmpan">1</span></div>
+  </div>
+  <input class="range" id="umpan" type="range" min="1" max="500" value="1" oninput="syncValue('umpan','vUmpan')">
+</div>
+
+  </div>
+
+<div class="label">MENANG</div>
+<input
+  id="menang"
+  class="input"
+  type="number"
+  min="0"
+  value="0"
+  oninput="hitungWinRate()"
+>
+
+<div class="label">KALAH</div>
+<input
+  id="kalah"
+  class="input"
+  type="number"
+  min="0"
+  value="0"
+  oninput="hitungWinRate()"
+>
+
+<div class="label">WIN RATE</div>
+<input
+  id="winrate"
+  class="input"
+  type="text"
+  value="0%"
+  readonly
+>
+
+  <button class="saveBtn" onclick="saveStatistik()">
+    ⚡ SAVE STATISTIK
+  </button>
+
+  <button class="backBtn" onclick="window.location.href='admin.html'">
+    ⬅ KEMBALI
+  </button>
+
+  <div id="success">✅ STATISTIK BERHASIL DISIMPAN</div>
+  <div id="error">❌ GAGAL SIMPAN STATISTIK</div>
+
+  <div class="note">
+    Data statistik akan muncul di popup radar chart ketika nama player diklik di halaman player.
+  </div>
+
+</div>
+
+<script>
+
+/* =========================
+GANTI LINK INI
+========================= */
+
+const API_STATISTIK =
+"https://script.google.com/macros/s/AKfycbzkdAGBD4V7E7I3-1VvsjmFYq6X-Yib4QIBtbGCu4S8UXFD5zRysBbzGMxt0ODhklrRwQ/exec";
+
+const API_JUARA =
+"https://script.google.com/macros/s/AKfycbw4fC24zyLqp4O-g5slyi0MrLfzMoo_waAbcR4qiFhbyUIb2L3KaPxf7x5V-SKKB_Sg/exec";
+
+
+/* =========================
+LOAD WEEK DARI JUARA
+========================= */
+
+async function loadWeeks(){
+
+  try{
+
+    let res = await fetch(API_JUARA + "?type=weeks");
+    let data = await res.json();
+
+    let html = `<option value="">Pilih Week</option>`;
+
+    data.forEach(item=>{
+      html += `
+        <option value="${item.week}">
+          ${item.week}
+        </option>
+      `;
+    });
+
+    document.getElementById("week").innerHTML = html;
+
+  }catch(err){
+
+    document.getElementById("week").innerHTML =
+    `<option value="">Gagal Load Week</option>`;
+
+    console.log(err);
+  }
+}
+
+
+/* =========================
+SYNC RANGE VALUE
+========================= */
+
+function syncValue(inputId, valueId){
+  document.getElementById(valueId).innerHTML =
+  document.getElementById(inputId).value;
+}
+
+
+/* =========================
+SAVE STATISTIK
+========================= */
+
+function hitungWinRate(){
+
+  const menang = Number(document.getElementById("menang").value) || 0;
+  const kalah = Number(document.getElementById("kalah").value) || 0;
+
+  const total = menang + kalah;
+
+  const winrate = total === 0
+    ? 0
+    : ((menang / total) * 100).toFixed(1);
+
+  document.getElementById("winrate").value = winrate + "%";
+}
+
+async function saveStatistik(){
+
+  const menang = Number(document.getElementById("menang").value) || 0;
+  const kalah = Number(document.getElementById("kalah").value) || 0;
+
+  const total = menang + kalah;
+
+  const winrate = total === 0
+    ? 0
+    : ((menang / total) * 100).toFixed(1);
+
+  const data = {
+    week: document.getElementById("week").value,
+    player: document.getElementById("player").value,
+
+    penguasaan: document.getElementById("penguasaan").value,
+    tembakan: document.getElementById("tembakan").value,
+    pelanggaran: document.getElementById("pelanggaran").value,
+    intersepsi: document.getElementById("intersepsi").value,
+    penyelamatan: document.getElementById("penyelamatan").value,
+    umpan: document.getElementById("umpan").value,
+
+    menang: menang,
+    kalah: kalah,
+    winrate: winrate
+  };
+
+  if(!data.week || !data.player){
+    alert("Week dan Player wajib dipilih");
+    return;
+  }
+
+  try{
+
+    const res = await fetch(API_STATISTIK, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if(result.status === "success"){
+
+      document.getElementById("success").innerHTML =
+      "✅ STATISTIK BERHASIL DISIMPAN";
+
+      document.getElementById("success").style.display = "block";
+      document.getElementById("error").style.display = "none";
+
+      alert("✅ Statistik berhasil disimpan");
+
+    }else{
+
+      throw new Error(result.message || "Gagal simpan statistik");
+
+    }
+
+  }catch(err){
+
+    document.getElementById("error").innerHTML =
+    "❌ GAGAL SIMPAN STATISTIK";
+
+    document.getElementById("success").style.display = "none";
+    document.getElementById("error").style.display = "block";
+
+    alert("❌ Gagal simpan statistik");
+    console.log(err);
+
+  }
+}
+
+
+/* =========================
+INIT
+========================= */
+
+loadWeeks();
+
+</script>
+
+</body>
+</html>

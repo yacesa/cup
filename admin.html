@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="
+width=390,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no
+">
+
+<title>CEO ADMIN PANEL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+
+width:100%;
+max-width:390px;
+min-width:390px;
+
+margin:auto;
+
+overflow-x:hidden;
+
+min-height:100vh;
+
+padding:20px;
+
+color:white;
+
+background:
+linear-gradient(
+rgba(0,0,0,.82),
+rgba(0,0,0,.9)
+),
+url('download (20).jpg');
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+
+}
+
+/* OVERLAY */
+
+body::before{
+
+content:'';
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:
+radial-gradient(
+circle at top,
+rgba(0,110,255,.18),
+transparent 40%
+),
+radial-gradient(
+circle at bottom,
+rgba(0,255,225,.12),
+transparent 40%
+);
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+/* HEADER */
+
+.header{
+
+padding:24px;
+
+border-radius:30px;
+
+text-align:center;
+
+background:rgba(10,15,30,.58);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(16px);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.35),
+0 0 20px rgba(0,110,255,.08);
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:800;
+
+background:linear-gradient(
+90deg,
+#00ffe1,
+#006eff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+}
+
+.sub{
+
+margin-top:10px;
+
+font-size:10px;
+
+line-height:1.8;
+
+color:#d5d5d5;
+
+}
+
+/* MENU */
+
+.menu{
+
+margin-top:22px;
+
+display:flex;
+flex-direction:column;
+
+gap:18px;
+
+}
+
+/* CARD */
+
+.menuCard{
+
+padding:24px;
+
+border-radius:30px;
+
+background:rgba(10,15,30,.58);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(16px);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.35),
+0 0 20px rgba(0,110,255,.08);
+
+cursor:pointer;
+
+transition:.25s ease;
+
+}
+
+.menuCard:hover{
+
+transform:translateY(-4px);
+
+border:1px solid rgba(0,255,225,.35);
+
+}
+
+.menuCard:active{
+
+transform:scale(.97);
+
+}
+
+.icon{
+
+font-size:40px;
+
+}
+
+.menuTitle{
+
+margin-top:16px;
+
+font-size:20px;
+font-weight:800;
+
+}
+
+.menuDesc{
+
+margin-top:8px;
+
+font-size:10px;
+
+line-height:1.9;
+
+color:#cfcfcf;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+margin-top:22px;
+
+text-align:center;
+
+font-size:9px;
+
+color:#9e9e9e;
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+
+<div class="logo">
+CEO ADMIN
+</div>
+
+<div class="sub">
+Panel administrator CEO LEAGUE mobile edition
+</div>
+
+</div>
+
+<div class="menu">
+
+<!-- CUP -->
+
+<div
+class="menuCard"
+onclick="window.location.href='spin.html'"
+>
+
+<div class="icon">
+
+</div>
+
+<div class="menuTitle">
+CEO CUP
+</div>
+
+<div class="menuDesc">
+Masuk ke halaman spin tournament dan sistem bracket CEO LEAGUE
+</div>
+
+</div>
+
+<!-- PLAYER -->
+
+<div
+class="menuCard"
+onclick="window.location.href='input.html'"
+>
+
+<div class="icon">
+
+</div>
+
+<div class="menuTitle">
+PLAYER RANK
+</div>
+
+<div class="menuDesc">
+Input ranking pemain, point, dan statistik realtime Google Sheet
+</div>
+
+</div>
+
+<!-- STATISTIK -->
+
+<div
+class="menuCard"
+onclick="window.location.href='statistik.html'"
+>
+
+<div class="icon">
+
+</div>
+
+<div class="menuTitle">
+INPUT STATISTIK
+</div>
+
+<div class="menuDesc">
+Input radar statistik player, win rate, penguasaan bola, intersepsi, dan performa pemain CEO LEAGUE
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+CEO LEAGUE ADMIN PANEL © 2026
+</div>
+
+</body>
+</html>

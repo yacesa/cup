@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=390,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>CEO INPUT PANEL</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+width:100%;
+max-width:390px;
+min-width:390px;
+margin:auto;
+overflow-x:hidden;
+padding:20px;
+min-height:100vh;
+color:white;
+background:
+linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.9)),
+url('download (20).jpg');
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+}
+
+body::before{
+content:'';
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at top,rgba(0,110,255,.18),transparent 40%),
+radial-gradient(circle at bottom,rgba(0,255,225,.12),transparent 40%);
+pointer-events:none;
+z-index:-1;
+}
+
+.header{
+width:100%;
+padding:18px;
+border-radius:28px;
+background:rgba(10,15,30,.58);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(16px);
+box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 20px rgba(0,110,255,.08);
+text-align:center;
+margin-bottom:20px;
+}
+
+.title{
+font-size:24px;
+font-weight:800;
+background:linear-gradient(90deg,#00ffe1,#006eff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.sub{
+margin-top:8px;
+font-size:10px;
+line-height:1.8;
+color:#d5d5d5;
+}
+
+.formBox{
+padding:20px;
+border-radius:28px;
+background:rgba(10,15,30,.58);
+border:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(16px);
+box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 20px rgba(0,110,255,.08);
+}
+
+.label{
+font-size:10px;
+font-weight:700;
+margin-bottom:8px;
+color:#9adfff;
+}
+
+.input{
+width:100%;
+height:52px;
+margin-bottom:16px;
+border:none;
+outline:none;
+padding:0 16px;
+border-radius:18px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.06);
+color:white;
+font-size:12px;
+font-weight:600;
+}
+
+select.input{
+appearance:none;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5'%3E%3C/path%3E%3C/svg%3E");
+background-repeat:no-repeat;
+background-position:right 14px center;
+background-size:14px;
+padding-right:40px;
+}
+
+select.input:focus{
+background-color:#111827;
+color:white;
+}
+
+.saveBtn{
+width:100%;
+height:54px;
+border:none;
+outline:none;
+border-radius:18px;
+font-size:12px;
+font-weight:800;
+color:white;
+background:linear-gradient(90deg,#00ffe1,#006eff);
+box-shadow:0 0 20px rgba(0,255,225,.25);
+cursor:pointer;
+}
+
+.backBtn{
+width:100%;
+height:52px;
+margin-top:14px;
+border:none;
+outline:none;
+border-radius:18px;
+font-size:11px;
+font-weight:700;
+color:white;
+background:rgba(255,255,255,.08);
+cursor:pointer;
+}
+
+#success{
+margin-top:16px;
+padding:14px;
+border-radius:16px;
+font-size:10px;
+font-weight:700;
+text-align:center;
+background:rgba(0,255,170,.12);
+border:1px solid rgba(0,255,170,.2);
+display:none;
+}
+
+#error{
+margin-top:16px;
+padding:14px;
+border-radius:16px;
+font-size:10px;
+font-weight:700;
+text-align:center;
+background:rgba(255,0,60,.12);
+border:1px solid rgba(255,0,60,.25);
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="title">CEO INPUT PANEL</div>
+  <div class="sub">Input ranking pemain CEO LEAGUE realtime database Google Sheet</div>
+</div>
+
+<div class="formBox">
+
+  <div class="label">WEEK</div>
+
+  <select id="week" class="input">
+    <option value="">Loading Week...</option>
+  </select>
+
+  <div class="label">RANK</div>
+  <input id="rank" class="input" placeholder="Contoh : 1">
+
+  <div class="label">PLAYER NAME</div>
+  <input id="player" class="input" placeholder="Nama Player">
+
+  <div class="label">POINT</div>
+  <input id="point" class="input" placeholder="Contoh : 30">
+
+  <button class="saveBtn" onclick="saveData()">
+    ⚡ SAVE PLAYER
+  </button>
+
+  <button class="backBtn" onclick="window.location.href='spin.html'">
+    ⬅ KEMBALI
+  </button>
+
+  <div id="success">✅ DATA BERHASIL DISIMPAN KE PLAYER</div>
+  <div id="error">❌ GAGAL SIMPAN / LOAD DATA</div>
+
+</div>
+
+<script>
+
+const API_JUARA =
+"https://script.google.com/macros/s/AKfycbw4fC24zyLqp4O-g5slyi0MrLfzMoo_waAbcR4qiFhbyUIb2L3KaPxf7x5V-SKKB_Sg/exec";
+
+const API_PLAYER =
+"https://script.google.com/macros/s/AKfycbw3ML6t2XC5gDi4nWPfwEwoUEUQ3xXirDO0UWEI6wbVytucMOsx_v1Gzq0bW5kRFsed/exec";
+
+async function loadWeeks(){
+
+  try{
+
+    let res = await fetch(API_JUARA + "?type=weeks");
+    let data = await res.json();
+
+    let select = document.getElementById("week");
+
+    let html = `<option value="">Pilih Week</option>`;
+
+    data.forEach(item => {
+      html += `
+        <option value="${item.week}">
+          ${item.week}
+        </option>
+      `;
+    });
+
+    select.innerHTML = html;
+
+  }catch(err){
+
+    document.getElementById("week").innerHTML =
+    `<option value="">Gagal Load Week</option>`;
+
+    console.log(err);
+  }
+}
+
+async function saveData(){
+
+  const data = {
+    week: document.getElementById("week").value,
+    rank: document.getElementById("rank").value,
+    player: document.getElementById("player").value,
+    point: document.getElementById("point").value
+  };
+
+  if(!data.week || !data.rank || !data.player || !data.point){
+    alert("Semua data wajib diisi");
+    return;
+  }
+
+  try{
+
+    const url =
+      API_PLAYER +
+      "?week=" + encodeURIComponent(data.week) +
+      "&rank=" + encodeURIComponent(data.rank) +
+      "&player=" + encodeURIComponent(data.player) +
+      "&point=" + encodeURIComponent(data.point);
+
+    let res = await fetch(url);
+    let result = await res.json();
+
+    if(result.status === "success"){
+
+      document.getElementById("success").style.display = "block";
+      document.getElementById("error").style.display = "none";
+
+      document.getElementById("rank").value = "";
+      document.getElementById("player").value = "";
+      document.getElementById("point").value = "";
+
+    }else{
+      throw new Error("Gagal simpan");
+    }
+
+  }catch(err){
+
+    document.getElementById("success").style.display = "none";
+    document.getElementById("error").style.display = "block";
+    console.log(err);
+
+  }
+}
+
+loadWeeks();
+
+</script>
+
+</body>
+</html>
